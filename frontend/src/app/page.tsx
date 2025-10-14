@@ -1,0 +1,210 @@
+"use client"
+import { Search } from "lucide-react"; 
+import { Formula1Section, ElectricSection, IndustrySection } from '@/components/sections'
+import Car from '../images/Car.jpg'
+import Image from "next/image";
+import BackToTopButton from "@/components/buttons/BackToTopButton";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import type { Article } from "@/types/types";
+import ArticleCard from "@/components/Cards/ArticleCards";
+
+
+export default function Home() {
+  const [f1Articles, setF1Articles] = useState<Article[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setF1Articles(data.articles);
+      })
+      .catch(err => console.error("Failed to fetch:", err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  const reviewArticles = f1Articles.filter(
+    (a) => a.category === 'reviews'
+  )
+
+  const formulaOneArticles = f1Articles.filter(
+    (a) => a.category === 'f1'
+  )
+
+  const industryArticles = f1Articles.filter(
+    (a) => a.category === 'industry'
+  )
+  const electricArticles = f1Articles.filter(
+    (a) => a.category === 'electric'
+  )
+
+  const exclusiveArticles = f1Articles.filter(
+    (a) => a.category === 'electric'
+  )
+  
+
+  const articles = [
+    {
+      id: 1,  
+      title: "New Porsche 911 Review",
+      summary: "A quick look at the latest Porsche 911 and its performance features.",
+      image: "https://placehold.co/600x400",
+      url: "#",
+    },
+    {
+      id: 2,
+      title: "Tesla Model S Plaid",
+      summary: "Exploring Tesla’s fastest sedan and how it stacks against supercars.",
+      image: "https://placehold.co/600x400",
+      url: "#",
+    },
+    {
+      id: 3,
+      title: "Toyota Corolla Hybrid",
+      summary: "An eco-friendly choice with surprising practicality.",
+      image: "https://placehold.co/600x400",
+      url: "#",
+    },
+  ];
+
+  const categories = [
+    { name: "Latest", slug: "latest" },
+    { name: "Reviews", slug: "reviews" },
+    { name: "Exclusive", slug: "exclusive" },
+    { name: "Formula 1", slug: "formulaOne" },
+    { name: "Electric Cars", slug: "electric" },
+    { name: "Industry and Business", slug: "industry" }
+  ];
+  if (isLoading) return <div className="p-8 text-center text-gray-500">Loading article...</div>;
+
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black pb-20 ">
+      <BackToTopButton/>
+      
+
+      {/* 🔹 Hero Section */}
+      <section className="relative h-screen shadow-sm bg-black">
+        {/* Sticky wrapper */}
+        <div className="sticky top-0 h-screen w-full text-white">
+          <div className="relative w-full h-full rounded-lg overflow-hidden">
+            <Image
+              src={Car}
+              alt="Car"
+              fill
+              className="object-cover object-[50%_80%]"
+              unoptimized
+            />
+
+            {/* Bottom-only inset shadow */}
+            <div className="absolute inset-0 [box-shadow:inset_0_-120px_80px_rgba(0,0,0,0.8)] pointer-events-none"></div>
+
+            {/* Text overlay */}
+            <div className="absolute top-10 right-0 text-center flex flex-col gap-y-4 px-6">
+              <h1 className="text-6xl font-bold [text-shadow:2px_2px_6px_rgba(0,0,0,1)]">
+                Auto Reviews
+              </h1>
+              <p className="text-2xl [text-shadow:2px_2px_6px_rgba(0,0,0,1)]">
+                Latest car reviews scraped and translated for you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Articles Section */}
+        <section className="w-full mx-auto px-6 py-6 pb-20" id="latest">
+          <div className="max-w-6xl mx-auto content-center">
+            <h2 className="text-2xl font-semibold mb-2 text-right text-white">
+              <Link href="/articles/latest" className="hover:underline">
+                Latest Articles
+              </Link>
+            </h2>
+            <hr className="border-gray-400 mb-6 bg-white w-full" />
+
+            <div className="flex gap-x-5 h-[60vh] text-right">
+              <div className="w-1/4">
+                <ArticleCard article={f1Articles[0]} variant="default" category={f1Articles[0].category!} />
+              </div>
+
+              <div className="w-1/2">
+                <ArticleCard article={f1Articles[1]} variant="featured" category={f1Articles[1].category!} />
+              </div>
+
+              <div className="w-1/4">
+                <ArticleCard article={f1Articles[2]} variant="default" category={f1Articles[2].category!} />
+              </div>
+            </div>
+          </div>
+        </section>
+        
+      <section className="max-w-6xl mx-auto px-6 py-6 pb-20" id="reviews">
+        <h2 className="text-2xl font-semibold mb-2 text-right text-white">
+          <Link href="/articles/reviews" className="hover:underline">
+            In-Depth Automotive Video Reviews
+          </Link>
+        </h2>
+
+        <div className="flex gap-x-5">
+          {/* LEFT SIDE */}
+          <div className="w-1/2 flex flex-col gap-5">
+            <hr className="border-gray-400 bg-white w-full" />
+
+            {reviewArticles.slice(0, 3).map((article, i) => (
+              <ArticleCard
+                key={i}
+                article={article}
+                category={article.category ?? "reviews"}
+                variant="compact"
+              />
+            ))}
+          </div>
+
+          {/* RIGHT SIDE */}
+          <div className="w-1/2 text-right">
+            <hr className="border-gray-400 mb-4 bg-white w-full" />
+            <ArticleCard
+              article={reviewArticles[3]}
+              category={reviewArticles[3].category ?? "reviews"}
+              variant="featured"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full mx-auto px-6 py-6 pb-20" id="exclusive">
+        <div className="max-w-6xl mx-auto content-center">
+          <h2 className="text-2xl font-semibold mb-2 text-right text-white">
+            <Link href="/articles/exclusive" className="hover:underline">
+              Exclusive
+            </Link>
+          </h2>
+
+          <hr className="border-gray-400 bg-white w-full mb-6" />
+
+          <div className="grid grid-cols-3 gap-6">
+            {exclusiveArticles && exclusiveArticles.length > 0 ? (
+              exclusiveArticles.slice(0, 6).map((article, i) => (
+                <ArticleCard
+                  key={article.id || i}
+                  article={article}
+                  category={article.category ?? "exclusive"}
+                  variant="default"
+                />
+              ))
+            ) : (
+              <p className="text-white col-span-3 text-center">
+                No exclusive articles available.
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <Formula1Section articles={formulaOneArticles}/>
+      <ElectricSection articles={electricArticles}/>
+      <IndustrySection articles={industryArticles}/>
+    </main>
+  );
+}
