@@ -41,7 +41,11 @@ export default function ArticleCard({
           />
           <h2 className="text-2xl font-bold mb-2">{article.title}</h2>
           <p className="text-gray-300 mb-2">{article.summary}</p>
-          <span className="text-blue-500 hover:underline">{article.category?.charAt(0).toUpperCase()+article.category?.slice(1)}</span>
+          <span className="text-blue-500 hover:underline">
+            {article.category
+              ? article.category.charAt(0).toUpperCase() + article.category.slice(1)
+              : "Uncategorized"}
+          </span>
 
       </Link>
     );
@@ -69,7 +73,8 @@ export default function ArticleCard({
             <span className="text-blue-500 hover:underline">
               {article.category
             ? article.category.charAt(0).toUpperCase() + article.category.slice(1)
-            : "Uncategorized"}</span>
+            : "Uncategorized"}
+            </span>
             </div>
       </Link>
     );
@@ -89,8 +94,11 @@ export default function ArticleCard({
         />
         <h2 className="text-xl font-bold mb-2">{article.title}</h2>
         <p className="text-white/90 mb-2">{article.summary}</p>
-        <span className="text-blue-500 hover:underline">{article.category?.charAt(0).toUpperCase()+article.category?.slice(1)}</span>
-      
+        <span className="text-blue-500 hover:underline">
+          {article.category
+            ? article.category.charAt(0).toUpperCase() + article.category.slice(1)
+            : "Uncategorized"}
+        </span>      
     </Link>
   );
 }
