@@ -1,5 +1,4 @@
 import React from "react";
-import { industryArticles } from "./data"; // make sure you have this array
 import Link from "next/link";
 import { Article } from "@/types/types";
 import ArticleCard from "@/components/Cards/ArticleCards";
