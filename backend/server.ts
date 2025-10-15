@@ -14,7 +14,7 @@ const PORT = 4000;
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://sawalifauto-final-eluj3kltj-jaroldenderezs-projects.vercel.app", // your Vercel URL
+  "https://sawalifauto-final.onrender.com", // your Vercel URL
 ];
 
 app.use(
