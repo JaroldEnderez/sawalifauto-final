@@ -12,10 +12,24 @@ import cors from "cors";
 const app = express();
 const PORT = 4000;
 
-app.use(cors({
-  origin: "http://localhost:3000", // your Next.js frontend URL
-  methods: ["GET", "POST"],
-}));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://sawalifauto-final-eluj3kltj-jaroldenderezs-projects.vercel.app", // your Vercel URL
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 mongoose.connect("mongodb://localhost:27017/sawalifauto")
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("❌ Connection error:", err));
