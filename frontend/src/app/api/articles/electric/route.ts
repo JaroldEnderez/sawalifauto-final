@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
-import { scrapeElectric } from "@backend/scraper/electric";
 
 export async function GET() {
-  const articles = await scrapeElectric();
-  return NextResponse.json({ success: true, articles });
+  try {
+    // Use your deployed Render backend URL here
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/scraper/electric`);
+    const data = await response.json();
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Error fetching electric articles:", error);
+    return NextResponse.json({ success: false, error: "Failed to fetch data" }, { status: 500 });
+  }
 }

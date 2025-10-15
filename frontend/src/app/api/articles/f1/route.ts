@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
-import { scrapeF1 } from "@backend/scraper/f1";
 
-export async function GET(){
-    const articles = await scrapeF1()
-    return NextResponse.json({success:true, articles})
+export async function GET() {
+  try {
+    // Use your deployed Render backend URL here
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/scraper/f1`);
+    const data = await response.json();
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Error fetching f1 articles:", error);
+    return NextResponse.json({ success: false, error: "Failed to fetch data" }, { status: 500 });
+  }
 }
