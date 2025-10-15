@@ -18,7 +18,7 @@ export default function ArticleCard({
   variant = "default",
 }: {
   article: Article;
-  category: string;
+  category?: string;
   variant?: "default" | "compact" | "featured";
 }) {
   const base =
