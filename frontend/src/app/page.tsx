@@ -15,6 +15,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    console.log('API URL:', process.env.NEXT_PUBLIC_API_URL);
      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles`)
       .then(res => res.json())
       .then(data => {
@@ -43,30 +44,6 @@ export default function Home() {
     (a) => a.category === 'electric'
   )
   
-
-  const articles = [
-    {
-      id: 1,  
-      title: "New Porsche 911 Review",
-      summary: "A quick look at the latest Porsche 911 and its performance features.",
-      image: "https://placehold.co/600x400",
-      url: "#",
-    },
-    {
-      id: 2,
-      title: "Tesla Model S Plaid",
-      summary: "Exploring Tesla’s fastest sedan and how it stacks against supercars.",
-      image: "https://placehold.co/600x400",
-      url: "#",
-    },
-    {
-      id: 3,
-      title: "Toyota Corolla Hybrid",
-      summary: "An eco-friendly choice with surprising practicality.",
-      image: "https://placehold.co/600x400",
-      url: "#",
-    },
-  ];
 
   const categories = [
     { name: "Latest", slug: "latest" },
