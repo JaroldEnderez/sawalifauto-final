@@ -67,9 +67,7 @@ export default function ArticleCard({
               {article.summary}
             </p>
             <span className="text-blue-500 hover:underline">
-              {article.category
-              ? article.category.charAt(0).toUpperCase() + article.category.slice(1)
-              : "Uncategorized"}</span>
+              {category}</span>
             </div>
       </Link>
     );
