@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
         const {category} = req.query
         const query = category ? { category } : {}
         const articles = await ArticleModel.find(query).sort({publishedAt: -1})
+        console.log("Articles found:", articles.length);
         res.json({success:true, articles})
     }catch(error){
         console.error("❌ Error fetching articles: ", error)
