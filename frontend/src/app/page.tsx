@@ -90,32 +90,50 @@ export default function Home() {
       </section>
 
 
-      {/* Articles Section */}
-        <section className="w-full mx-auto px-6 py-6 pb-20" id="latest">
-          <div className="max-w-6xl mx-auto content-center">
-            <h2 className="text-2xl font-semibold mb-2 text-right text-white">
-              <Link href="/articles/latest" className="hover:underline">
-                Latest Articles
-              </Link>
-            </h2>
-            <hr className="border-gray-400 mb-6 bg-white w-full" />
+     {/* 📰 Articles Section */}
+      <section className="w-full mx-auto px-6 py-6 pb-20" id="latest">
+        <div className="max-w-6xl mx-auto content-center">
+          <h2 className="text-2xl font-semibold mb-2 text-right text-white">
+            <Link href="/articles/latest" className="hover:underline">
+              Latest Articles
+            </Link>
+          </h2>
+          <hr className="border-gray-400 mb-6 bg-white w-full" />
 
+          {/* Prevent crash if API is empty */}
+          {f1Articles.length >= 3 ? (
             <div className="flex gap-x-5 h-[60vh] text-right">
               <div className="w-1/4">
-                <ArticleCard article={f1Articles[0]} variant="default" category={f1Articles[0].category!} />
+                <ArticleCard
+                  article={f1Articles[0]}
+                  variant="default"
+                  category={f1Articles[0]?.category ?? "f1"}
+                />
               </div>
 
               <div className="w-1/2">
-                <ArticleCard article={f1Articles[1]} variant="featured" category={f1Articles[1].category!} />
+                <ArticleCard
+                  article={f1Articles[1]}
+                  variant="featured"
+                  category={f1Articles[1]?.category ?? "f1"}
+                />
               </div>
 
               <div className="w-1/4">
-                <ArticleCard article={f1Articles[2]} variant="default" category={f1Articles[2].category!} />
+                <ArticleCard
+                  article={f1Articles[2]}
+                  variant="default"
+                  category={f1Articles[2]?.category ?? "f1"}
+                />
               </div>
             </div>
-          </div>
-        </section>
-        
+          ) : (
+            <p className="text-white text-center py-10">No latest articles available.</p>
+          )}
+        </div>
+      </section>
+
+      {/* 🎥 Reviews Section */}
       <section className="max-w-6xl mx-auto px-6 py-6 pb-20" id="reviews">
         <h2 className="text-2xl font-semibold mb-2 text-right text-white">
           <Link href="/articles/reviews" className="hover:underline">
@@ -123,33 +141,41 @@ export default function Home() {
           </Link>
         </h2>
 
-        <div className="flex gap-x-5">
-          {/* LEFT SIDE */}
-          <div className="w-1/2 flex flex-col gap-5">
-            <hr className="border-gray-400 bg-white w-full" />
+        {reviewArticles.length > 0 ? (
+          <div className="flex gap-x-5">
+            {/* LEFT SIDE */}
+            <div className="w-1/2 flex flex-col gap-5">
+              <hr className="border-gray-400 bg-white w-full" />
+              {reviewArticles.slice(0, 3).map((article, i) => (
+                <ArticleCard
+                  key={i}
+                  article={article}
+                  category={article.category ?? "reviews"}
+                  variant="compact"
+                />
+              ))}
+            </div>
 
-            {reviewArticles.slice(0, 3).map((article, i) => (
-              <ArticleCard
-                key={i}
-                article={article}
-                category={article.category ?? "reviews"}
-                variant="compact"
-              />
-            ))}
+            {/* RIGHT SIDE */}
+            <div className="w-1/2 text-right">
+              <hr className="border-gray-400 mb-4 bg-white w-full" />
+              {reviewArticles[3] ? (
+                <ArticleCard
+                  article={reviewArticles[3]}
+                  category={reviewArticles[3]?.category ?? "reviews"}
+                  variant="featured"
+                />
+              ) : (
+                <p className="text-white text-center">More reviews coming soon!</p>
+              )}
+            </div>
           </div>
-
-          {/* RIGHT SIDE */}
-          <div className="w-1/2 text-right">
-            <hr className="border-gray-400 mb-4 bg-white w-full" />
-            <ArticleCard
-              article={reviewArticles[3]}
-              category={reviewArticles[3].category ?? "reviews"}
-              variant="featured"
-            />
-          </div>
-        </div>
+        ) : (
+          <p className="text-white text-center py-10">No reviews available yet.</p>
+        )}
       </section>
 
+      {/* 🔒 Exclusive Section */}
       <section className="w-full mx-auto px-6 py-6 pb-20" id="exclusive">
         <div className="max-w-6xl mx-auto content-center">
           <h2 className="text-2xl font-semibold mb-2 text-right text-white">
@@ -160,24 +186,25 @@ export default function Home() {
 
           <hr className="border-gray-400 bg-white w-full mb-6" />
 
-          <div className="grid grid-cols-3 gap-6">
-            {exclusiveArticles && exclusiveArticles.length > 0 ? (
-              exclusiveArticles.slice(0, 6).map((article, i) => (
+          {exclusiveArticles.length > 0 ? (
+            <div className="grid grid-cols-3 gap-6">
+              {exclusiveArticles.slice(0, 6).map((article, i) => (
                 <ArticleCard
                   key={article.id || i}
                   article={article}
                   category={article.category ?? "exclusive"}
                   variant="default"
                 />
-              ))
-            ) : (
-              <p className="text-white col-span-3 text-center">
-                No exclusive articles available.
-              </p>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-white col-span-3 text-center">
+              No exclusive articles available.
+            </p>
+          )}
         </div>
       </section>
+
 
       <Formula1Section articles={formulaOneArticles}/>
       <ElectricSection articles={electricArticles}/>
