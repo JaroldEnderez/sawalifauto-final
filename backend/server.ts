@@ -8,9 +8,10 @@ import scraperRoutes from './routes/scraperRoutes'
 import mongoose from "mongoose";
 import { scrapeIndustry } from "./scraper/industry";
 import cors from "cors";
-
 const app = express();
 const PORT = 4000;
+import dotenv from "dotenv";
+dotenv.config();
 
 const allowedOrigins = [
   "http://localhost:3000",                        // local dev frontend
