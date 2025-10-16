@@ -21,7 +21,6 @@ import type { ArticlesResponse } from "@/types/api";
 //     ],
 //   };
 
-  
   export default function ArticleListPage({ params }: { params: Promise<{ category: string }> }) {
     const { category } = use(params);
     const [f1Articles, setF1Articles] = useState<Article[]>([])
