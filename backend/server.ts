@@ -33,7 +33,7 @@ app.use(
 
 //mongodb+srv://<jarold>:<>@cluster0.clore3k.mongodb.net/
 mongoose.connect(process.env.MONGODB_URI!)
-  .then(() => console.log("✅ Connected to MongoDB"))
+  .then(() => console.log("✅ Connected to MongoDB:", mongoose.connection.name))
   .catch((err) => console.error("❌ Connection error:", err));
 
 app.get("/f1", async (req, res) => { 
