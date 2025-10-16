@@ -13,8 +13,8 @@ const app = express();
 const PORT = 4000;
 
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://sawalifauto-final.onrender.com", // your Vercel URL
+  "http://localhost:3000",                        // local dev frontend
+  "https://sawalifauto-final.vercel.app",         // ✅ your Vercel frontend
 ];
 
 app.use(
@@ -29,6 +29,7 @@ app.use(
     credentials: true,
   })
 );
+
 //mongodb+srv://<jarold>:<>@cluster0.clore3k.mongodb.net/
 mongoose.connect(process.env.MONGODB_URI!)
   .then(() => console.log("✅ Connected to MongoDB"))
