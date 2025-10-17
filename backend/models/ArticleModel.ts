@@ -12,4 +12,4 @@ const articleSchema = new mongoose.Schema({
     source: String
 })
 
-export const ArticleModel = mongoose.model("Article", articleSchema, "Sawalifauto")
+export const ArticleModel = mongoose.model("Article", articleSchema, "Sawalifauto");

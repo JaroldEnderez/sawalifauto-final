@@ -11,7 +11,6 @@ export async function scrapeElectric() {
 
   const html = await page.content();
   const $ = cheerio.load(html);
-
   
   // Matches hrefs like /2025/10/02/... or /2025/09/30/...
   const links: string[] = [];
